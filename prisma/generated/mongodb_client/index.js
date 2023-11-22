@@ -113,7 +113,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\ivanm\\Desktop\\Assembler\\Proyects\\SoundSphereBackend\\prisma\\generated\\mongodb_client",
+      "value": "D:\\Users\\jivel\\Documents\\Programacion\\Proyectos\\SoundSphereBackend\\prisma\\generated\\mongodb_client",
       "fromEnvVar": null
     },
     "config": {
@@ -130,8 +130,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
   "clientVersion": "5.6.0",
@@ -140,7 +139,7 @@ const config = {
     "db"
   ],
   "activeProvider": "mongodb",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -149,8 +148,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "Ly8gVGhpcyBpcyB5b3VyIFByaXNtYSBzY2hlbWEgZmlsZSwKLy8gbGVhcm4gbW9yZSBhYm91dCBpdCBpbiB0aGUgZG9jczogaHR0cHM6Ly9wcmlzLmx5L2QvcHJpc21hLXNjaGVtYQoKZ2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgPSAicHJpc21hLWNsaWVudC1qcyIKICBvdXRwdXQgPSAiLi9nZW5lcmF0ZWQvbW9uZ29kYl9jbGllbnQiCn0KCmRhdGFzb3VyY2UgZGIgewogIHByb3ZpZGVyID0gIm1vbmdvZGIiCiAgdXJsICAgICAgPSBlbnYoIk1PTkdPX1VSSV9ERVYiKQp9Cgptb2RlbCBVc2VyIHsKICBpZCAgICAgICAgU3RyaW5nICAgQGlkIEBkZWZhdWx0KGF1dG8oKSkgQG1hcCgiX2lkIikgQGRiLk9iamVjdElkCiAgY3JlYXRlZEF0IERhdGVUaW1lIEBkZWZhdWx0KG5vdygpKQogIHVwZGF0ZWRBdCBEYXRlVGltZSBAdXBkYXRlZEF0CiAgZW1haWwgICAgIFN0cmluZyAgIEB1bmlxdWUKICBuYW1lICAgICAgU3RyaW5nCgogIEBAbWFwKCJ1c2VycyIpCn0K",
-  "inlineSchemaHash": "c254db06d766ad959f813a6eadd374106c4ba1d14aee11e6ad8fe7b3bfde4e98",
+  "inlineSchema": "Ly8gVGhpcyBpcyB5b3VyIFByaXNtYSBzY2hlbWEgZmlsZSwNCi8vIGxlYXJuIG1vcmUgYWJvdXQgaXQgaW4gdGhlIGRvY3M6IGh0dHBzOi8vcHJpcy5seS9kL3ByaXNtYS1zY2hlbWENCg0KZ2VuZXJhdG9yIGNsaWVudCB7DQogIHByb3ZpZGVyID0gInByaXNtYS1jbGllbnQtanMiDQogIG91dHB1dCA9ICIuL2dlbmVyYXRlZC9tb25nb2RiX2NsaWVudCINCn0NCg0KZGF0YXNvdXJjZSBkYiB7DQogIHByb3ZpZGVyID0gIm1vbmdvZGIiDQogIHVybCAgICAgID0gZW52KCJNT05HT19VUklfREVWIikNCn0NCg0KbW9kZWwgVXNlciB7DQogIGlkICAgICAgICBTdHJpbmcgICBAaWQgQGRlZmF1bHQoYXV0bygpKSBAbWFwKCJfaWQiKSBAZGIuT2JqZWN0SWQNCiAgY3JlYXRlZEF0IERhdGVUaW1lIEBkZWZhdWx0KG5vdygpKQ0KICB1cGRhdGVkQXQgRGF0ZVRpbWUgQHVwZGF0ZWRBdA0KICBlbWFpbCAgICAgU3RyaW5nICAgQHVuaXF1ZQ0KICBuYW1lICAgICAgU3RyaW5nDQoNCiAgQEBtYXAoInVzZXJzIikNCn0NCg==",
+  "inlineSchemaHash": "3d49430bb9882a62d4907e4707da08afaf5902af6fd86d4eec0713d6ec2830a0",
   "noEngine": false
 }
 
