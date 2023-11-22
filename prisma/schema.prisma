@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "./generated/mongodb_client"
+  output   = "./generated/mongodb_client"
 }
 
 datasource db {
@@ -12,11 +12,31 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  name      String
-
-  @@map("users")
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  email       String   @unique
+  name        String
+  likeSongs   Song[]   @relation(name: "LikedSongs")
+  uploadSongs Song[]   @relation(name: "UploadedSongs")
 }
+
+model Song {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  name          String
+  url           String
+  duration      Int
+  rating        Int
+  thumbnail     String
+  popularity    Boolean
+  userCreatorId String   @db.ObjectId
+  userCreator   User?    @relation(name: "UploadedSongs", fields: [userCreatorId], references: [id])
+  likedById     String[] @db.ObjectId
+  userLike      User?    @relation(name: "LikedSongs", fields: [likedById], references: [id])
+  //album     Album
+  //genre     Genre
+}
+
+//To do album y genre models
