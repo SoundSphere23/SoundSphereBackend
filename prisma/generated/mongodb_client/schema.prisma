@@ -25,20 +25,21 @@ model User {
   favouritesArtist Artist[]
 }
 
+//To do revisar campos opcionales
 model Song {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   name          String
-  url           String
-  duration      Int
-  rating        Int
-  thumbnail     String
-  year          Int
+  url           String?
+  duration      Int?
+  rating        Int?
+  thumbnail     String?
+  year          Int?
   // popularity    Boolean
-  reproductions Int
-  isPublic      Boolean
-  userCreatorId String    @db.ObjectId
+  reproductions Int?
+  isPublic      Boolean?
+  userCreatorId String?   @db.ObjectId
   userCreator   User?     @relation(name: "UploadedSongs", fields: [userCreatorId], references: [id])
   likedById     String[]  @db.ObjectId
   userLike      User?     @relation(name: "LikedSongs", fields: [likedById], references: [id])
@@ -59,12 +60,12 @@ model Album {
   name          String
   thumbnail     String
   totalTracks   Int
-  songs         Song[]
+  Song          Song[]
   isPublic      Boolean
   userCreatorId String    @db.ObjectId
-  userCreator   User?     @relation(name: "UploadedAlbums", fields: [userCreatorId], references: [id])
+  UserCreator   User?     @relation(name: "UploadedAlbums", fields: [userCreatorId], references: [id])
   likedById     String[]  @db.ObjectId
-  userLike      User?     @relation(name: "LikedAlbums", fields: [likedById], references: [id])
+  UserLike      User?     @relation(name: "LikedAlbums", fields: [likedById], references: [id])
   Genre         Genre?    @relation(fields: [genreId], references: [id])
   genreId       String?   @db.ObjectId
   Playlist      Playlist? @relation(fields: [playlistId], references: [id])
@@ -78,8 +79,8 @@ model Genre {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String
-  songs     Song[]
-  albums    Album[]
+  Song      Song[]
+  Album     Album[]
 }
 
 model Playlist {
@@ -88,10 +89,10 @@ model Playlist {
   updatedAt     DateTime @updatedAt
   name          String
   thumbnail     String
-  songs         Song[]
+  Song          Song[]
   Album         Album[]
   userCreatorId String   @db.ObjectId
-  userCreator   User?    @relation(fields: [userCreatorId], references: [id])
+  UserCreator   User?    @relation(fields: [userCreatorId], references: [id])
 }
 
 model Artist {
@@ -99,9 +100,9 @@ model Artist {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   name         String
-  thumbnail    String
-  songs        Song[]
+  thumbnail    String?
+  Song         Song[]
   Album        Album[]
-  userWhoLikes User?    @relation(fields: [likedByUser], references: [id])
+  UserWhoLikes User?    @relation(fields: [likedByUser], references: [id])
   likedByUser  String?  @db.ObjectId
 }
