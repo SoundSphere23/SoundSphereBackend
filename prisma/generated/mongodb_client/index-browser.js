@@ -108,6 +108,55 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name'
 };
 
+exports.Prisma.SongScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  url: 'url',
+  duration: 'duration',
+  rating: 'rating',
+  thumbnail: 'thumbnail',
+  year: 'year',
+  reproductions: 'reproductions',
+  isPublic: 'isPublic',
+  userCreatorId: 'userCreatorId',
+  likedById: 'likedById',
+  albumId: 'albumId',
+  genreId: 'genreId',
+  playlistId: 'playlistId'
+};
+
+exports.Prisma.AlbumScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  thumbnail: 'thumbnail',
+  totalTracks: 'totalTracks',
+  isPublic: 'isPublic',
+  userCreatorId: 'userCreatorId',
+  likedById: 'likedById',
+  genreId: 'genreId',
+  playlistId: 'playlistId'
+};
+
+exports.Prisma.GenreScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name'
+};
+
+exports.Prisma.PlaylistScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  thumbnail: 'thumbnail',
+  userCreatorId: 'userCreatorId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -120,7 +169,11 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Song: 'Song',
+  Album: 'Album',
+  Genre: 'Genre',
+  Playlist: 'Playlist'
 };
 
 /**

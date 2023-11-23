@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "./generated/mongodb_client"
+  output   = "./generated/mongodb_client"
 }
 
 datasource db {
@@ -12,11 +12,79 @@ datasource db {
 }
 
 model User {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  email        String     @unique
+  name         String
+  likeSongs    Song[]     @relation(name: "LikedSongs")
+  uploadSongs  Song[]     @relation(name: "UploadedSongs")
+  likeAlbums   Album[]    @relation(name: "LikedAlbums")
+  uploadAlbums Album[]    @relation(name: "UploadedAlbums")
+  playlist     Playlist[]
+}
+
+model Song {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String
+  url           String
+  duration      Int
+  rating        Int
+  thumbnail     String
+  year          Int
+  // popularity    Boolean
+  reproductions Int
+  isPublic      Boolean
+  userCreatorId String    @db.ObjectId
+  userCreator   User?     @relation(name: "UploadedSongs", fields: [userCreatorId], references: [id])
+  likedById     String[]  @db.ObjectId
+  userLike      User?     @relation(name: "LikedSongs", fields: [likedById], references: [id])
+  Album         Album?    @relation(fields: [albumId], references: [id])
+  albumId       String?   @db.ObjectId
+  Genre         Genre?    @relation(fields: [genreId], references: [id])
+  genreId       String?   @db.ObjectId
+  Playlist      Playlist? @relation(fields: [playlistId], references: [id])
+  playlistId    String?   @db.ObjectId
+}
+
+model Album {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String
+  thumbnail     String
+  totalTracks   Int
+  songs         Song[]
+  isPublic      Boolean
+  userCreatorId String    @db.ObjectId
+  userCreator   User?     @relation(name: "UploadedAlbums", fields: [userCreatorId], references: [id])
+  likedById     String[]  @db.ObjectId
+  userLike      User?     @relation(name: "LikedAlbums", fields: [likedById], references: [id])
+  Genre         Genre?    @relation(fields: [genreId], references: [id])
+  genreId       String?   @db.ObjectId
+  Playlist      Playlist? @relation(fields: [playlistId], references: [id])
+  playlistId    String?   @db.ObjectId
+}
+
+model Genre {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  email     String   @unique
   name      String
+  songs     Song[]
+  albums    Album[]
+}
 
-  @@map("users")
+model Playlist {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  name          String
+  thumbnail     String
+  songs         Song[]
+  Album         Album[]
+  userCreatorId String   @db.ObjectId
+  userCreator   User?    @relation(fields: [userCreatorId], references: [id])
 }
