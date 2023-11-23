@@ -28,7 +28,7 @@ export const createUser = async (req: Request, res: Response) => {
     
             const userId = user.id;
             return res.status(200).json({ userId });
-        } else {
+        } if(!user) {
            
             user = await prismaClient.user.create({
                 data: { name, email }
