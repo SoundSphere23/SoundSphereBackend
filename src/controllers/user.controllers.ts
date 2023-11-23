@@ -1,7 +1,8 @@
 import { Response, Request } from "express";
 import { prismaClient } from '../db/client'
 
-// ejemplos de función => controller
+
+// CONSEGUIR TODOS LOS USUARIOS
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
         const users = await prismaClient.user.findMany({});
@@ -11,16 +12,33 @@ export const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
+//BUSCAR USUARIO Y SI NO EXISTE CREARLOS
+
 export const createUser = async (req: Request, res: Response) => {
-    const { name, email} = req.body;
+    const { name, email } = req.body;
 
     try {
-        
-        const newUser = await prismaClient.user.create({ data: { name, email } });
+        let user = await prismaClient.user.findUnique({
+            where: {
+                email: email,
+            },
+        });
 
-        res.status(201).json(newUser);
+        if (user) {
+    
+            const userId = user.id;
+            return res.status(200).json({ userId });
+        } else {
+           
+            user = await prismaClient.user.create({
+                data: { name, email }
+            });
+            return res.status(201).json(user);
+        }
     } catch (error) {
-        console.error("Error creating user:", error);
-        res.status(500).json(error);
+        console.error('Error creando/buscando usuario:', error);
+        res.status(500).json({ error: 'Error al buscar/crear el usuario' });
+    } finally {
+        await prismaClient.$disconnect();
     }
-}
+};
