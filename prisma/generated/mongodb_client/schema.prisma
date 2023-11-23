@@ -40,7 +40,7 @@ model Song {
   reproductions Int?
   isPublic      Boolean?
   userCreatorId String?   @db.ObjectId
-  userCreator   User?     @relation(name: "UploadedSongs", fields: [userCreatorId], references: [id])
+  UserCreator   User?     @relation(name: "UploadedSongs", fields: [userCreatorId], references: [id])
   likedById     String[]  @db.ObjectId
   userLike      User?     @relation(name: "LikedSongs", fields: [likedById], references: [id])
   Album         Album?    @relation(fields: [albumId], references: [id])
@@ -68,7 +68,6 @@ model Album {
   UserLike      User?     @relation(name: "LikedAlbums", fields: [likedById], references: [id])
   Genre         Genre?    @relation(fields: [genreId], references: [id])
   genreId       String?   @db.ObjectId
-  Playlist      Playlist? @relation(fields: [playlistId], references: [id])
   playlistId    String?   @db.ObjectId
   Artist        Artist?   @relation(fields: [artistId], references: [id])
   artistId      String?   @db.ObjectId
@@ -88,9 +87,8 @@ model Playlist {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   name          String
-  thumbnail     String
+  thumbnail     String?
   Song          Song[]
-  Album         Album[]
   userCreatorId String   @db.ObjectId
   UserCreator   User?    @relation(fields: [userCreatorId], references: [id])
 }
