@@ -124,7 +124,8 @@ exports.Prisma.SongScalarFieldEnum = {
   likedById: 'likedById',
   albumId: 'albumId',
   genreId: 'genreId',
-  playlistId: 'playlistId'
+  playlistId: 'playlistId',
+  artistId: 'artistId'
 };
 
 exports.Prisma.AlbumScalarFieldEnum = {
@@ -138,7 +139,8 @@ exports.Prisma.AlbumScalarFieldEnum = {
   userCreatorId: 'userCreatorId',
   likedById: 'likedById',
   genreId: 'genreId',
-  playlistId: 'playlistId'
+  playlistId: 'playlistId',
+  artistId: 'artistId'
 };
 
 exports.Prisma.GenreScalarFieldEnum = {
@@ -157,6 +159,15 @@ exports.Prisma.PlaylistScalarFieldEnum = {
   userCreatorId: 'userCreatorId'
 };
 
+exports.Prisma.ArtistScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  name: 'name',
+  thumbnail: 'thumbnail',
+  likedByUser: 'likedByUser'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -173,7 +184,8 @@ exports.Prisma.ModelName = {
   Song: 'Song',
   Album: 'Album',
   Genre: 'Genre',
-  Playlist: 'Playlist'
+  Playlist: 'Playlist',
+  Artist: 'Artist'
 };
 
 /**

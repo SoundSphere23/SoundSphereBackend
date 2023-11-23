@@ -12,16 +12,17 @@ datasource db {
 }
 
 model User {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  email        String     @unique
-  name         String
-  likeSongs    Song[]     @relation(name: "LikedSongs")
-  uploadSongs  Song[]     @relation(name: "UploadedSongs")
-  likeAlbums   Album[]    @relation(name: "LikedAlbums")
-  uploadAlbums Album[]    @relation(name: "UploadedAlbums")
-  playlist     Playlist[]
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  email            String     @unique
+  name             String
+  likeSongs        Song[]     @relation(name: "LikedSongs")
+  uploadSongs      Song[]     @relation(name: "UploadedSongs")
+  likeAlbums       Album[]    @relation(name: "LikedAlbums")
+  uploadAlbums     Album[]    @relation(name: "UploadedAlbums")
+  playlist         Playlist[]
+  favouritesArtist Artist[]
 }
 
 model Song {
@@ -47,6 +48,8 @@ model Song {
   genreId       String?   @db.ObjectId
   Playlist      Playlist? @relation(fields: [playlistId], references: [id])
   playlistId    String?   @db.ObjectId
+  Artist        Artist?   @relation(fields: [artistId], references: [id])
+  artistId      String[]  @db.ObjectId
 }
 
 model Album {
@@ -66,6 +69,8 @@ model Album {
   genreId       String?   @db.ObjectId
   Playlist      Playlist? @relation(fields: [playlistId], references: [id])
   playlistId    String?   @db.ObjectId
+  Artist        Artist?   @relation(fields: [artistId], references: [id])
+  artistId      String?   @db.ObjectId
 }
 
 model Genre {
@@ -87,4 +92,16 @@ model Playlist {
   Album         Album[]
   userCreatorId String   @db.ObjectId
   userCreator   User?    @relation(fields: [userCreatorId], references: [id])
+}
+
+model Artist {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  name         String
+  thumbnail    String
+  songs        Song[]
+  Album        Album[]
+  userWhoLikes User?    @relation(fields: [likedByUser], references: [id])
+  likedByUser  String?  @db.ObjectId
 }
