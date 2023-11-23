@@ -8,6 +8,6 @@ songRoutes.post('/:userId', createSong)
 songRoutes.delete('/:songId', deleteSongById)
 songRoutes.patch('/:songId', updateSongById)
 songRoutes.get('/:songId', getSongById)
-songRoutes.get('/:userId', getSongsByUserId)
+songRoutes.get('/user/:userId', getSongsByUserId)
 
 export default songRoutes

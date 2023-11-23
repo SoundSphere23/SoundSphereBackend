@@ -75,7 +75,6 @@ export const updateSongById = async (req: Request, res: Response) => {
     }
 }
 
-//Fix
 export const getSongsByUserId = async (req: Request, res: Response) => {
     const { songId } = req.params;
 

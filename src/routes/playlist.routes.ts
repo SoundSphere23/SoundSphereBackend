@@ -8,7 +8,7 @@ playlistRoutes.get("/:playlistId", getPlaylistById)
 playlistRoutes.post("/:userId", createPlaylist)
 playlistRoutes.patch("/:playlistId", updatePlaylist)
 playlistRoutes.delete("/:playlistId", deletePlaylist)
-playlistRoutes.get("/:userId", getPlaylistsByUserId)
+playlistRoutes.get("/user/:userId", getPlaylistsByUserId)
 
 
 export default playlistRoutes
