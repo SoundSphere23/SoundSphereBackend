@@ -139,7 +139,6 @@ exports.Prisma.AlbumScalarFieldEnum = {
   userCreatorId: 'userCreatorId',
   likedById: 'likedById',
   genreId: 'genreId',
-  playlistId: 'playlistId',
   artistId: 'artistId'
 };
 

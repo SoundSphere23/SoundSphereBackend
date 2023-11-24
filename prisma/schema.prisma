@@ -54,23 +54,22 @@ model Song {
 }
 
 model Album {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   name          String
   thumbnail     String
-  totalTracks   Int
+  totalTracks   Int?
   Song          Song[]
-  isPublic      Boolean
-  userCreatorId String    @db.ObjectId
+  isPublic      Boolean?
+  userCreatorId String?   @db.ObjectId
   UserCreator   User?     @relation(name: "UploadedAlbums", fields: [userCreatorId], references: [id])
-  likedById     String[]  @db.ObjectId
-  UserLike      User?     @relation(name: "LikedAlbums", fields: [likedById], references: [id])
-  Genre         Genre?    @relation(fields: [genreId], references: [id])
-  genreId       String?   @db.ObjectId
-  playlistId    String?   @db.ObjectId
-  Artist        Artist?   @relation(fields: [artistId], references: [id])
-  artistId      String?   @db.ObjectId
+  likedById     String[] @db.ObjectId
+  UserLike      User?    @relation(name: "LikedAlbums", fields: [likedById], references: [id])
+  Genre         Genre    @relation(fields: [genreId], references: [id])
+  genreId       String   @db.ObjectId
+  Artist        Artist   @relation(fields: [artistId], references: [id])
+  artistId      String   @db.ObjectId
 }
 
 model Genre {

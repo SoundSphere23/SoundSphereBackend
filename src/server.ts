@@ -5,6 +5,7 @@ import songRoutes from "./routes/song.routes";
 import genreRoutes from "./routes/genre.routes";
 import artistRoutes from "./routes/artist.routes";
 import playlistRoutes from "./routes/playlist.routes";
+import albumRoutes from "./routes/album.routes";
 
 const cors = require("cors");
 const app = express();
@@ -17,5 +18,6 @@ app.use("/song", songRoutes);
 app.use("/genre", genreRoutes);
 app.use("/artist", artistRoutes);
 app.use("/playlist", playlistRoutes)
+app.use("/album", albumRoutes)
 
 export default app;
