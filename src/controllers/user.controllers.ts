@@ -1,15 +1,16 @@
 import { Response, Request } from "express";
-import { prismaClient } from '../db/client'
+import { prismaClient } from "../db/client";
 
 
 // CONSEGUIR TODOS LOS USUARIOS
 export const getAllUsers = async (req: Request, res: Response) => {
-    try {
-        const users = await prismaClient.user.findMany({});
-        res.status(201).json(users);
-    } catch (error) {
-        res.status(500).json(error);
-    }
+  try {
+    console.log("init get all users");
+    const users = await prismaClient.user.findMany({});
+    res.status(201).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 //BUSCAR USUARIO Y SI NO EXISTE CREARLOS

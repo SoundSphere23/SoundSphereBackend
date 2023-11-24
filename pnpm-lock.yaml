@@ -17,6 +17,9 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.18.2
+  express-oauth2-jwt-bearer:
+    specifier: ^1.6.0
+    version: 1.6.0
   mongodb:
     specifier: ^6.3.0
     version: 6.3.0
@@ -496,6 +499,13 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /express-oauth2-jwt-bearer@1.6.0:
+    resolution: {integrity: sha512-HXnez7vocYlOqlfF3ozPcf/WE3zxT7zfUNfeg5FHJnvNwhBYlNXiPOvuCtBalis8xcigvwtInzEKhBuH87+9ug==}
+    engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0 || ^20.2.0}
+    dependencies:
+      jose: 4.15.4
+    dev: false
+
   /express@4.18.2:
     resolution: {integrity: sha512-5/PsL6iGPdfQ/lKM1UuielYgv3BUoJfz1aUwU9vHZ+J7gyvwdQXFEBIEIaxeGf0GIcreATNyBExtalisDbuMqQ==}
     engines: {node: '>= 0.10.0'}
@@ -721,6 +731,10 @@ packages:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
     dev: true
+
+  /jose@4.15.4:
+    resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
+    dev: false
 
   /lru-cache@10.0.3:
     resolution: {integrity: sha512-B7gr+F6MkqB3uzINHXNctGieGsRTMwIBgxkp0yq/5BwcuDzD4A8wQpHQW6vDAm1uKSLQghmRdD9sKqf2vJ1cEg==}
