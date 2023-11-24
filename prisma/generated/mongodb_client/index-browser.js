@@ -117,7 +117,6 @@ exports.Prisma.SongScalarFieldEnum = {
   duration: 'duration',
   rating: 'rating',
   thumbnail: 'thumbnail',
-  year: 'year',
   reproductions: 'reproductions',
   isPublic: 'isPublic',
   userCreatorId: 'userCreatorId',
@@ -164,6 +163,7 @@ exports.Prisma.ArtistScalarFieldEnum = {
   updatedAt: 'updatedAt',
   name: 'name',
   thumbnail: 'thumbnail',
+  songsId: 'songsId',
   likedByUser: 'likedByUser'
 };
 
