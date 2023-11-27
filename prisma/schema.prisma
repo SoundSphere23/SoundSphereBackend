@@ -2,8 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "./generated/mongodb_client"
+  provider      = "prisma-client-js"
+  output        = "./generated/mongodb_client"
+  binaryTargets = ["native", "darwin-arm64"]
 }
 
 datasource db {
@@ -48,7 +49,7 @@ model Song {
   genreId       String    @db.ObjectId
   Playlist      Playlist? @relation(fields: [playlistId], references: [id])
   playlistId    String?   @db.ObjectId
-  Artist        Artist[]    @relation(fields: [artistId], references: [id])
+  Artist        Artist[]  @relation(fields: [artistId], references: [id])
   artistId      String[]  @db.ObjectId
 }
 
