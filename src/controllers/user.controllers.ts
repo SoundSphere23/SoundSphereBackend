@@ -4,10 +4,14 @@ import { prismaClient } from "../db/client";
 // CONSEGUIR TODOS LOS USUARIOS
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    console.log("init get all users");
     const users = await prismaClient.user.findMany({});
+    
+    console.log(">>>users", users);
+
     res.status(201).json(users);
+    console.log("init get all users");
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 };
