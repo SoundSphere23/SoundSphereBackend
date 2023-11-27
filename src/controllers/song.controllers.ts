@@ -47,11 +47,11 @@ export const createSong = async (req: Request, res: Response) => {
                 UserCreator: { connect: { id: userId } },
                 // Album: { connect: { id: albumId } },
                 Genre: { connect: { id: genreId } },
-                Artist: {
-                    connect: artistId.map((artistId: string) => ({
-                        id: artistId
-                    }))
-                }
+                // Artist: {
+                //     connect: artistId.map((artistId: string) => ({
+                //         id: artistId
+                //     }))
+                // }
                 // Playlist: { connect: { id: playlistId } },
                 // UserLike: { connect: { id: likedById } }
             }
