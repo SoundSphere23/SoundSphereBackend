@@ -126,3 +126,16 @@ export const getSongsByUserId = async (req: Request, res: Response) => {
 };
 
 /*To do: getSongsByUserId, getSongByGenre, getSongByAlbum, getSongbyPlaylist, getFavouritesSongsByUser, getSongsbyArtists */
+export const getSongsPublic = async (req: Request, res: Response) => {
+  try {
+    const songs = await prismaClient.song.findMany({
+      where: {
+        isPublic: true,
+      },
+    });
+
+    res.status(200).json(songs);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
