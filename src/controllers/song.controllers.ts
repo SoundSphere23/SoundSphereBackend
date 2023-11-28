@@ -44,7 +44,7 @@ export const createSong = async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
-    if (!name || !url || !thumbnail || !genreId || !isPublic)
+    if (!name || !url || !thumbnail || !genreId )
       throw new Error("Missing fields");
 
     const newSong = await prismaClient.song.create({
@@ -110,12 +110,12 @@ export const updateSongById = async (req: Request, res: Response) => {
 };
 
 export const getSongsByUserId = async (req: Request, res: Response) => {
-  const { songId } = req.params;
+  const { userId } = req.params;
 
   try {
     const songs = await prismaClient.song.findMany({
       where: {
-        userCreatorId: songId,
+        userCreatorId: userId,
       },
     });
 
