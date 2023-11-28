@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { prismaClient } from "../db/client";
-import { error } from "console";
+
 
 export const getPlaylistById = async (req: Request, res: Response) => {
     const { playlistId } = req.params
@@ -16,19 +16,50 @@ export const getPlaylistById = async (req: Request, res: Response) => {
 
 export const createPlaylist = async (req: Request, res: Response) => {
     const { userId } = req.params
-    const { name } = req.body;
+    const { playlistSongs, thumbnail, playlistName } = req.body;
+    // const { playlistName } = req.body.name;
+    if (!userId) {
+        return res.status(404).json({ message: 'User not found' })
+    }
+  if (!playlistName) {
+        return res.status(404).json({ message: 'No PlaylistName' })
+    }
+
+   if (!playlistSongs) {
+        return res.status(404).json({ message: 'No Songs' })
+    }
+
+    if (!thumbnail) {
+        return res.status(404).json({ message: 'No thumbnail' })
+    }  
 
     try {
-        if (!name) throw new Error("Missing fields");
+        if (!playlistName) throw new Error("Missing fields");
 
-        const newplaylist = await prismaClient.playlist.create({
+        const newPlaylist = await prismaClient.playlist.create({
             data: {
-                name,
-                UserCreator: { connect: { id: userId } }
+                thumbnail,           
+                playlistName,
+                UserCreator: { connect: { id: userId } },
+                playlistSongs, 
+            },
+               select: {
+                id: true,
+                userCreatorId: true,
+                thumbnail: true,
+                playlistName: true,
+                playlistSongs: true, 
             }
         })
+  await prismaClient.user.update({
+            where: { id: userId },
+            data: { playlist: { connect: { id: newPlaylist.id } } }
+        })
 
-        res.status(201).json(newplaylist);
+
+        res.status(201).json(newPlaylist);
+
+      
     } catch (error) {
         res.status(500).json(error);
     }
@@ -36,16 +67,15 @@ export const createPlaylist = async (req: Request, res: Response) => {
 
 export const updatePlaylist = async (req: Request, res: Response) => {
     const { playlistId } = req.params
-    const { name } = req.body;
-
-    try {
-        if (!name) throw new Error("Missing fields");
+    const { playlistName } = req.body;
+     try {
+        if (!playlistName) throw new Error("Missing fields");
 
         const newplaylist = await prismaClient.playlist.update({
             where: {
                 id: playlistId
             },
-            data: { name }
+            data: { playlistName }
         })
 
         res.status(201).json(newplaylist);
@@ -71,7 +101,7 @@ export const deletePlaylist = async (req: Request, res: Response) => {
 
 export const getAllPlaylist = async (req: Request, res: Response) => {
     try {
-        const playlist = await prismaClient.playlist.findMany({})
+        const playlist = await prismaClient.playlist.findMany()
         res.status(200).json(playlist)
     } catch (error) {
         res.status(500).json(error)
@@ -93,4 +123,4 @@ export const getPlaylistsByUserId = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json(error);
     }
-};
+}

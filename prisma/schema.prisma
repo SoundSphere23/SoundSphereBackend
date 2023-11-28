@@ -82,12 +82,12 @@ model Genre {
 }
 
 model Playlist {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  name          String
+ playlistName          String @unique
   thumbnail     String?
-  Song          Song[]
+playlistSongs         Song[]
   userCreatorId String   @db.ObjectId
   UserCreator   User?    @relation(fields: [userCreatorId], references: [id])
 }
@@ -101,6 +101,6 @@ model Artist {
   Song         Song[]   @relation(fields: [songsId], references: [id])
   songsId      String[] @db.ObjectId
   Album        Album[]
-  UserWhoLikes User?    @relation(fields: [likedByUser], references: [id])
-  likedByUser  String?  @db.ObjectId
+  followedBy User?    @relation(fields: [likedBy], references: [id])
+  likedBy  String?  @db.ObjectId
 }

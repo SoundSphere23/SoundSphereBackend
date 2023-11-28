@@ -47,7 +47,6 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
-prisma/generated
 # Optional npm cache directory
 .npm
 
