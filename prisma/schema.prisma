@@ -38,7 +38,7 @@ model Song {
   thumbnail     String
   // popularity    Boolean
   reproductions Int?
-  isPublic      Boolean
+  isPublic      Boolean?
   userCreatorId String    @db.ObjectId
   UserCreator   User      @relation(name: "UploadedSongs", fields: [userCreatorId], references: [id])
   likedById     String[]  @db.ObjectId
