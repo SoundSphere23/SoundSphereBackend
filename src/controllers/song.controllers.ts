@@ -74,33 +74,6 @@ export const createSong = async (req: Request, res: Response) => {
         res.status(500).json(error);
     }
 }
-    const newSong = await prismaClient.song.create({
-      data: {
-        name,
-        url,
-        // duration,
-        // rating,
-        thumbnail,
-        // reproductions,
-        isPublic,
-        UserCreator: { connect: { id: userId } },
-        // Album: { connect: { id: albumId } },
-        Genre: { connect: { id: genreId } },
-        // Artist: {
-        //     connect: artistId.map((artistId: string) => ({
-        //         id: artistId
-        //     }))
-        // }
-        // Playlist: { connect: { id: playlistId } },
-        // UserLike: { connect: { id: likedById } }
-      },
-    });
-    res.status(201).json(newSong);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-};
 
 export const deleteSongById = async (req: Request, res: Response) => {
   const { songId } = req.params;
