@@ -144,6 +144,7 @@ exports.Prisma.AlbumScalarFieldEnum = {
 exports.Prisma.GenreScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
+  thumbnail: 'thumbnail',
   updatedAt: 'updatedAt',
   name: 'name'
 };

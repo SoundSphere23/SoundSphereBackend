@@ -74,6 +74,7 @@ model Album {
 model Genre {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
+  thumbnail String?
   updatedAt DateTime @updatedAt
   name      String
   Song      Song[]
