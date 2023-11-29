@@ -2,6 +2,7 @@ import { Response, Request } from "express";
 import { prismaClient } from "../db/client";
 
 
+
 export const getPlaylistById = async (req: Request, res: Response) => {
     const { playlistId } = req.params
     try {

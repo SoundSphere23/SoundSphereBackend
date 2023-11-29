@@ -4994,6 +4994,7 @@ export namespace Prisma {
   export type GenreMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
+    thumbnail: string | null
     updatedAt: Date | null
     name: string | null
   }
@@ -5001,6 +5002,7 @@ export namespace Prisma {
   export type GenreMaxAggregateOutputType = {
     id: string | null
     createdAt: Date | null
+    thumbnail: string | null
     updatedAt: Date | null
     name: string | null
   }
@@ -5008,6 +5010,7 @@ export namespace Prisma {
   export type GenreCountAggregateOutputType = {
     id: number
     createdAt: number
+    thumbnail: number
     updatedAt: number
     name: number
     _all: number
@@ -5017,6 +5020,7 @@ export namespace Prisma {
   export type GenreMinAggregateInputType = {
     id?: true
     createdAt?: true
+    thumbnail?: true
     updatedAt?: true
     name?: true
   }
@@ -5024,6 +5028,7 @@ export namespace Prisma {
   export type GenreMaxAggregateInputType = {
     id?: true
     createdAt?: true
+    thumbnail?: true
     updatedAt?: true
     name?: true
   }
@@ -5031,6 +5036,7 @@ export namespace Prisma {
   export type GenreCountAggregateInputType = {
     id?: true
     createdAt?: true
+    thumbnail?: true
     updatedAt?: true
     name?: true
     _all?: true
@@ -5111,6 +5117,7 @@ export namespace Prisma {
   export type GenreGroupByOutputType = {
     id: string
     createdAt: Date
+    thumbnail: string | null
     updatedAt: Date
     name: string
     _count: GenreCountAggregateOutputType | null
@@ -5135,6 +5142,7 @@ export namespace Prisma {
   export type GenreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
+    thumbnail?: boolean
     updatedAt?: boolean
     name?: boolean
     Song?: boolean | Genre$SongArgs<ExtArgs>
@@ -5145,6 +5153,7 @@ export namespace Prisma {
   export type GenreSelectScalar = {
     id?: boolean
     createdAt?: boolean
+    thumbnail?: boolean
     updatedAt?: boolean
     name?: boolean
   }
@@ -5165,6 +5174,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       createdAt: Date
+      thumbnail: string | null
       updatedAt: Date
       name: string
     }, ExtArgs["result"]["genre"]>
@@ -5593,6 +5603,7 @@ export namespace Prisma {
   interface GenreFieldRefs {
     readonly id: FieldRef<"Genre", 'String'>
     readonly createdAt: FieldRef<"Genre", 'DateTime'>
+    readonly thumbnail: FieldRef<"Genre", 'String'>
     readonly updatedAt: FieldRef<"Genre", 'DateTime'>
     readonly name: FieldRef<"Genre", 'String'>
   }
@@ -8120,6 +8131,7 @@ export namespace Prisma {
   export const GenreScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
+    thumbnail: 'thumbnail',
     updatedAt: 'updatedAt',
     name: 'name'
   };
@@ -8539,6 +8551,7 @@ export namespace Prisma {
     NOT?: GenreWhereInput | GenreWhereInput[]
     id?: StringFilter<"Genre"> | string
     createdAt?: DateTimeFilter<"Genre"> | Date | string
+    thumbnail?: StringNullableFilter<"Genre"> | string | null
     updatedAt?: DateTimeFilter<"Genre"> | Date | string
     name?: StringFilter<"Genre"> | string
     Song?: SongListRelationFilter
@@ -8548,6 +8561,7 @@ export namespace Prisma {
   export type GenreOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    thumbnail?: SortOrder
     updatedAt?: SortOrder
     name?: SortOrder
     Song?: SongOrderByRelationAggregateInput
@@ -8560,6 +8574,7 @@ export namespace Prisma {
     OR?: GenreWhereInput[]
     NOT?: GenreWhereInput | GenreWhereInput[]
     createdAt?: DateTimeFilter<"Genre"> | Date | string
+    thumbnail?: StringNullableFilter<"Genre"> | string | null
     updatedAt?: DateTimeFilter<"Genre"> | Date | string
     name?: StringFilter<"Genre"> | string
     Song?: SongListRelationFilter
@@ -8569,6 +8584,7 @@ export namespace Prisma {
   export type GenreOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    thumbnail?: SortOrder
     updatedAt?: SortOrder
     name?: SortOrder
     _count?: GenreCountOrderByAggregateInput
@@ -8582,6 +8598,7 @@ export namespace Prisma {
     NOT?: GenreScalarWhereWithAggregatesInput | GenreScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Genre"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Genre"> | Date | string
+    thumbnail?: StringNullableWithAggregatesFilter<"Genre"> | string | null
     updatedAt?: DateTimeWithAggregatesFilter<"Genre"> | Date | string
     name?: StringWithAggregatesFilter<"Genre"> | string
   }
@@ -9021,6 +9038,7 @@ export namespace Prisma {
   export type GenreCreateInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
     Song?: SongCreateNestedManyWithoutGenreInput
@@ -9030,6 +9048,7 @@ export namespace Prisma {
   export type GenreUncheckedCreateInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
     Song?: SongUncheckedCreateNestedManyWithoutGenreInput
@@ -9038,6 +9057,7 @@ export namespace Prisma {
 
   export type GenreUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     Song?: SongUpdateManyWithoutGenreNestedInput
@@ -9046,6 +9066,7 @@ export namespace Prisma {
 
   export type GenreUncheckedUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     Song?: SongUncheckedUpdateManyWithoutGenreNestedInput
@@ -9055,18 +9076,21 @@ export namespace Prisma {
   export type GenreCreateManyInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
   }
 
   export type GenreUpdateManyMutationInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
   }
 
   export type GenreUncheckedUpdateManyInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
   }
@@ -9554,6 +9578,7 @@ export namespace Prisma {
   export type GenreCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    thumbnail?: SortOrder
     updatedAt?: SortOrder
     name?: SortOrder
   }
@@ -9561,6 +9586,7 @@ export namespace Prisma {
   export type GenreMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    thumbnail?: SortOrder
     updatedAt?: SortOrder
     name?: SortOrder
   }
@@ -9568,6 +9594,7 @@ export namespace Prisma {
   export type GenreMinOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
+    thumbnail?: SortOrder
     updatedAt?: SortOrder
     name?: SortOrder
   }
@@ -10995,6 +11022,7 @@ export namespace Prisma {
   export type GenreCreateWithoutSongInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
     Album?: AlbumCreateNestedManyWithoutGenreInput
@@ -11003,6 +11031,7 @@ export namespace Prisma {
   export type GenreUncheckedCreateWithoutSongInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
     Album?: AlbumUncheckedCreateNestedManyWithoutGenreInput
@@ -11159,6 +11188,7 @@ export namespace Prisma {
 
   export type GenreUpdateWithoutSongInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     Album?: AlbumUpdateManyWithoutGenreNestedInput
@@ -11166,6 +11196,7 @@ export namespace Prisma {
 
   export type GenreUncheckedUpdateWithoutSongInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     Album?: AlbumUncheckedUpdateManyWithoutGenreNestedInput
@@ -11298,6 +11329,7 @@ export namespace Prisma {
   export type GenreCreateWithoutAlbumInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
     Song?: SongCreateNestedManyWithoutGenreInput
@@ -11306,6 +11338,7 @@ export namespace Prisma {
   export type GenreUncheckedCreateWithoutAlbumInput = {
     id?: string
     createdAt?: Date | string
+    thumbnail?: string | null
     updatedAt?: Date | string
     name: string
     Song?: SongUncheckedCreateNestedManyWithoutGenreInput
@@ -11441,6 +11474,7 @@ export namespace Prisma {
 
   export type GenreUpdateWithoutAlbumInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     Song?: SongUpdateManyWithoutGenreNestedInput
@@ -11448,6 +11482,7 @@ export namespace Prisma {
 
   export type GenreUncheckedUpdateWithoutAlbumInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     Song?: SongUncheckedUpdateManyWithoutGenreNestedInput
