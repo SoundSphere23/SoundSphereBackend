@@ -16,10 +16,21 @@ export const getPlaylistById = async (req: Request, res: Response) => {
 
 export const createPlaylist = async (req: Request, res: Response) => {
     const { userId } = req.params
-    const { name } = req.body;
+    const { playlistSongs, thumbnail, playlistName } = req.body;
+    
+    if (!userId) {
+        return res.status(404).json({ message: 'User not found' })
+    }
+  if (!playlistName) {
+        return res.status(404).json({ message: 'No PlaylistName' })
+    }
+
+    if (!thumbnail) {
+        return res.status(404).json({ message: 'No thumbnail' })
+    }  
 
     try {
-        if (!name) throw new Error("Missing fields");
+        if (!playlistName) throw new Error("Missing fields");
 
         const newplaylist = await prismaClient.playlist.create({
             data: {

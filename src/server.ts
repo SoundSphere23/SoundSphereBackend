@@ -17,7 +17,7 @@ app.use("/user", userRoutes);
 app.use("/song", songRoutes);
 app.use("/genre", genreRoutes);
 app.use("/artist", artistRoutes);
-app.use("/playlist", playlistRoutes)
+app.use("/playlist", playlistRoutes) 
 app.use("/album", albumRoutes)
 
 export default app;

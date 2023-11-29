@@ -5,7 +5,7 @@ const playlistRoutes = Router()
 
 playlistRoutes.get("/", getAllPlaylist)
 playlistRoutes.get("/:playlistId", getPlaylistById)
-playlistRoutes.post("/:userId", createPlaylist)
+playlistRoutes.post("/create/:userId", createPlaylist)
 playlistRoutes.patch("/:playlistId", updatePlaylist)
 playlistRoutes.delete("/:playlistId", deletePlaylist)
 playlistRoutes.get("/user/:userId", getPlaylistsByUserId)

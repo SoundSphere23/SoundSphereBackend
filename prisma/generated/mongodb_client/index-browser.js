@@ -123,7 +123,7 @@ exports.Prisma.SongScalarFieldEnum = {
   likedById: 'likedById',
   albumId: 'albumId',
   genreId: 'genreId',
-  playlistId: 'playlistId',
+  playlist: 'playlist',
   artistId: 'artistId'
 };
 
@@ -154,6 +154,7 @@ exports.Prisma.PlaylistScalarFieldEnum = {
   updatedAt: 'updatedAt',
   name: 'name',
   thumbnail: 'thumbnail',
+  playlistSongs: 'playlistSongs',
   userCreatorId: 'userCreatorId'
 };
 
