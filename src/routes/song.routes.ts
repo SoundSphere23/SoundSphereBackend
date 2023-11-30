@@ -1,14 +1,20 @@
-import { Router } from 'express'
-import { createSong, deleteSongById, getAllSongs, getSongById, getSongsByUserId, updateSongById } from '../controllers/song.controllers'
+import { Router } from "express";
+import {
+  createSong,
+  deleteSongById,
+  getAllSongs,
+  getSongById,
+  getSongsByUserId,
+  updateSongById,
+} from "../controllers/song.controllers";
 
+const songRoutes = Router();
 
-const songRoutes = Router()
+songRoutes.get("/public", getAllSongs);
+songRoutes.post("/:userId", createSong);
+songRoutes.delete("/:songId", deleteSongById);
+songRoutes.patch("/:songId", updateSongById);
+songRoutes.get("/:songId", getSongById);
+songRoutes.get("/user/:userId", getSongsByUserId);
 
-songRoutes.get("/", getAllSongs)
-songRoutes.post('/:userId', createSong)
-songRoutes.delete('/:songId', deleteSongById)
-songRoutes.patch('/:songId', updateSongById)
-songRoutes.get('/:songId', getSongById)
-songRoutes.get('/user/:userId', getSongsByUserId)
-
-export default songRoutes
+export default songRoutes;
