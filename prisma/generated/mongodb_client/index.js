@@ -179,7 +179,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\pinmi\\OneDrive\\Documents\\GitHub\\SoundSphereBackend\\prisma\\generated\\mongodb_client",
+      "value": "C:\\Users\\Kayn mertens\\Documents\\GitHub\\SoundSphereBackend\\prisma\\generated\\mongodb_client",
       "fromEnvVar": null
     },
     "config": {

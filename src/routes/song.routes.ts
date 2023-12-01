@@ -7,6 +7,7 @@ import {
   getPublicSongs,
   getSongsByUserId,
   updateSongById,
+  getPublicSongsByGenre,
 } from "../controllers/song.controllers";
 
 const songRoutes = Router();
@@ -18,5 +19,6 @@ songRoutes.post('/:userId', createSong)
 songRoutes.delete('/:songId', deleteSongById)
 songRoutes.patch('/:songId', updateSongById)
 songRoutes.get('/:songId', getSongById)
+songRoutes.get("/public/genre/:genreId", getPublicSongsByGenre)
 
 export default songRoutes;
