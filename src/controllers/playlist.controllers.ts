@@ -107,7 +107,6 @@ export const getAllPlaylist = async (req: Request, res: Response) => {
 
 export const getPlaylistsByUserId = async (req: Request, res: Response) => {
     const { userId } = req.params;
-    console.log(userId)
 
     try {
         const playlists = await prismaClient.playlist.findMany({

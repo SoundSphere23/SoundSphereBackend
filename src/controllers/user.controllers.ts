@@ -1,27 +1,22 @@
 import { Response, Request } from "express";
 import { prismaClient } from "../db/client";
 
-// CONSEGUIR TODOS LOS USUARIOS
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await prismaClient.user.findMany({});
     
-    console.log(">>>users", users);
 
     res.status(201).json(users);
-    console.log("init get all users");
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
   }
 };
 
-//BUSCAR USUARIO Y SI NO EXISTE CREARLOS
 
 export const createUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
 
-  console.log("Create user intiated");
   try {
     let user = await prismaClient.user.findUnique({
       where: {
@@ -47,8 +42,6 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// UPDATE USER INFORMATION
-// UPDATE USER NAME
 
 export const userUpdateDataController = async (req: Request, res: Response) => {
   const { name, email } = req.body;

@@ -34,7 +34,6 @@ export const createAlbum = async (req: Request, res: Response) => {
         name,
         thumbnail,
         UserCreator: { connect: { id: userId } },
-        // Artist: { connect: { id: artistId } },
         Genre: { connect: { id: genreId } },
         isPublic,
       },

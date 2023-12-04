@@ -26,7 +26,6 @@ model User {
   favouritesArtist Artist[]
 }
 
-//To do revisar campos opcionales
 model Song {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime @default(now())
@@ -36,7 +35,6 @@ model Song {
   duration      Int?
   rating        Int?
   thumbnail     String
-  // popularity    Boolean
   reproductions Int?
   isPublic      Boolean?
   userCreatorId String   @db.ObjectId
@@ -85,7 +83,7 @@ model Playlist {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
- playlistName          String @unique
+  playlistName  String   @unique
   thumbnail     String?
   playlistSongs String[] @db.ObjectId
   userCreatorId String   @db.ObjectId

@@ -30,16 +30,9 @@ export const createSong = async (req: Request, res: Response) => {
   const {
     name,
     url,
-    // duration,
-    // rating,
     thumbnail,
-    // reproductions,
     isPublic,
-    // likedById,
-    albumId,
     genreId,
-    // artistId,
-    // playlistId,
   } = req.body;
   const { userId } = req.params;
 
@@ -55,29 +48,16 @@ export const createSong = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "No genreId" });
     }
 
-    if (!albumId) {
-      return res.status(404).json({ message: "Tu puta madre" });
-    }
+
 
         const newSong = await prismaClient.song.create({
             data: {
                 name,
                 url,
-                // duration,
-                // rating,
                 thumbnail,
-                // reproductions,
                 isPublic,
                 UserCreator: { connect: { id: userId } },
-                // Album: { connect: { id: albumId } },
                 Genre: { connect: { id: genreId } },
-                // Artist: {
-                //     connect: artistId.map((artistId: string) => ({
-                //         id: artistId
-                //     }))
-                // }
-                // Playlist: { connect: { id: playlistId } },
-                // UserLike: { connect: { id: likedById } }
             }
         })
         res.status(201).json(newSong);
@@ -152,7 +132,6 @@ export const getPublicSongs = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
-/*To do: getSongsByUserId, getSongByGenre, getSongByAlbum, getSongbyPlaylist, getFavouritesSongsByUser, getSongsbyArtists */
 
 
 export const getPublicSongsByGenre = async (req: Request, res: Response) => {
