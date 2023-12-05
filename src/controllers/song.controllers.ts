@@ -27,13 +27,7 @@ export const getSongById = async (req: Request, res: Response) => {
 };
 
 export const createSong = async (req: Request, res: Response) => {
-  const {
-    name,
-    url,
-    thumbnail,
-    isPublic,
-    genreId,
-  } = req.body;
+  const { name, url, thumbnail, isPublic, genreId, albumId } = req.body;
   const { userId } = req.params;
 
   try {
@@ -48,24 +42,27 @@ export const createSong = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "No genreId" });
     }
 
-
-
-        const newSong = await prismaClient.song.create({
-            data: {
-                name,
-                url,
-                thumbnail,
-                isPublic,
-                UserCreator: { connect: { id: userId } },
-                Genre: { connect: { id: genreId } },
-            }
-        })
-        res.status(201).json(newSong);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json(error);
+    if (!albumId) {
+      return res.status(404).json({ message: "No albumId" });
     }
-}
+
+    const newSong = await prismaClient.song.create({
+      data: {
+        name,
+        url,
+        thumbnail,
+        isPublic,
+        UserCreator: { connect: { id: userId } },
+        Genre: { connect: { id: genreId } },
+        Album: { connect: { id: albumId } },
+      },
+    });
+    res.status(201).json(newSong);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+};
 
 export const deleteSongById = async (req: Request, res: Response) => {
   const { songId } = req.params;
@@ -133,14 +130,13 @@ export const getPublicSongs = async (req: Request, res: Response) => {
   }
 };
 
-
 export const getPublicSongsByGenre = async (req: Request, res: Response) => {
   try {
-    const {genreId} = req.params;
+    const { genreId } = req.params;
     const song = await prismaClient.song.findMany({
       where: {
         isPublic: true,
-        genreId: genreId
+        genreId: genreId,
       },
     });
     res.status(200).json(song);
