@@ -115,8 +115,6 @@ export const getPlaylistsByUserId = async (req: Request, res: Response) => {
 };
 
 export const addSongToPlayList = async (req: Request, res: Response) => {
-  console.log("init");
-
   const { playlistId } = req.params;
   const { songId, thumbnail } = req.body;
 
@@ -126,7 +124,13 @@ export const addSongToPlayList = async (req: Request, res: Response) => {
     });
 
     if (!existingPlaylist) {
-      throw new Error("Playlist not found");
+      return res.status(404).json({ error: "Playlist not found" });
+    }
+
+    if (existingPlaylist.playlistSongs.includes(songId)) {
+      res
+        .status(400)
+        .json({ error: "This song already exists in the selected playlist" });
     }
 
     const updatedPlaylist = await prismaClient.playlist.update({
@@ -140,6 +144,7 @@ export const addSongToPlayList = async (req: Request, res: Response) => {
     });
     res.status(200).json(updatedPlaylist);
   } catch (error) {
-    res.status(500).json({ error, message: "Couldn't add song to playlist" });
+    console.error("Error adding song to playlist:", error);
+    if (!res.headersSent) res.status(500).json(error);
   }
 };
