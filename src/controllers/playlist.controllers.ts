@@ -118,7 +118,7 @@ export const addSongToPlayList = async (req: Request, res: Response) => {
   console.log("init");
 
   const { playlistId } = req.params;
-  const { songId } = req.body;
+  const { songId, thumbnail } = req.body;
 
   try {
     const existingPlaylist = await prismaClient.playlist.findUnique({
@@ -135,6 +135,7 @@ export const addSongToPlayList = async (req: Request, res: Response) => {
       },
       data: {
         playlistSongs: [songId, ...existingPlaylist.playlistSongs],
+        thumbnail: thumbnail,
       },
     });
     res.status(200).json(updatedPlaylist);
