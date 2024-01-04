@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addSongToPlayList,
   createPlaylist,
   deletePlaylist,
   getAllPlaylist,
@@ -16,5 +17,6 @@ playlistRoutes.post("/create/:userId", createPlaylist);
 playlistRoutes.patch("/:playlistId", updatePlaylist);
 playlistRoutes.delete("/:playlistId", deletePlaylist);
 playlistRoutes.post("/user/:userId", getPlaylistsByUserId);
+playlistRoutes.patch("/addsong/:playlistId", addSongToPlayList);
 
 export default playlistRoutes;
