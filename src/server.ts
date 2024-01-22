@@ -19,4 +19,8 @@ app.use("/artist", artistRoutes);
 app.use("/playlist", playlistRoutes) 
 app.use("/album", albumRoutes)
 
+app.get("/", (req, res) => {
+    res.status(200).json({message:"SoundSphere backend api"})
+})
+
 export default app;
