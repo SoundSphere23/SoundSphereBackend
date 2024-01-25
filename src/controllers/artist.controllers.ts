@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { prismaClient } from "../db/client";
+import  prismaClient  from "../db/client";
 
 export const getArtistById = async (req: Request, res: Response) => {
     const { artistId } = req.params
