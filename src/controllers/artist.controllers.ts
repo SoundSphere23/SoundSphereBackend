@@ -57,10 +57,28 @@ export const deleteArtist = async (req: Request, res: Response) => {
 }
 
 export const getAllArtists = async (req: Request, res: Response) => {
+    const page = parseInt(req.query.page as string) || 0;
+    const pageSize = 23;
+
     try {
-        const artist = await prismaClient.artist.findMany({})
-        res.status(200).json(artist)
+        const artists = await prismaClient.artist.findMany({
+            take: pageSize,
+            skip: page * pageSize,
+            select: {
+                id: true,
+                name: true,
+                thumbnail: true,
+                Song: {
+                    take: 10, 
+                    include: {
+                        Album: true, 
+                        
+                    },
+                },
+            },
+        });
+        res.status(200).json(artists);
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
-}
+};

@@ -2,8 +2,8 @@ import { Response, Request } from "express";
 import prismaClient from "../db/client";
 
 export const getAllSongs = async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 0; // Default to page 0
-  const pageSize = 20;
+  const page = parseInt(req.query.page as string) || 0; 
+  const pageSize = 23;
 
   try {
     const songs = await prismaClient.song.findMany({
