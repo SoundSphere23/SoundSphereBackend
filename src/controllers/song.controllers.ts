@@ -2,9 +2,30 @@ import { Response, Request } from "express";
 import prismaClient from "../db/client";
 
 export const getAllSongs = async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 0; // Default to page 0
+  const pageSize = 20;
+
   try {
-    const song = await prismaClient.song.findMany({});
-    res.status(200).json(song);
+    const songs = await prismaClient.song.findMany({
+      where: {
+        isPublic: true,
+      },
+      include: {
+        Artist: {
+          select: {
+            name: true,
+          },
+        },
+        Genre: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      take: pageSize,
+      skip: page * pageSize,
+    });
+    res.status(200).json(songs);
   } catch (error) {
     res.status(500).json(error);
   }
