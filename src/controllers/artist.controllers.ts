@@ -2,14 +2,14 @@ import { Response, Request } from "express";
 import prismaClient from "../db/client";
 
 export const getArtistById = async (req: Request, res: Response) => {
-    const { artistId } = req.params
+    const { artistId } = req.body
     try {
         const artist = await prismaClient.artist.findUnique({
             where: { id: artistId }
         })
         res.status(200).json(artist)
     } catch (error) {
-        res.status(500).json({ error, message: "Can get genres" })
+        res.status(500).json({ error, message: "Can't get genres" })
     }
 }
 
