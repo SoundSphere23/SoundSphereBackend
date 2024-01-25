@@ -2,7 +2,7 @@ import { Response, Request } from "express";
 import prismaClient from "../db/client";
 
 export const getAllSongs = async (req: Request, res: Response) => {
-  const page = parseInt(req.query.page as string) || 0; 
+  const page = parseInt(req.query.page as string) || 0; // Default to page 0
   const pageSize = 23;
 
   try {
@@ -10,10 +10,19 @@ export const getAllSongs = async (req: Request, res: Response) => {
       where: {
         isPublic: true,
       },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        url: true,
+        thumbnail: true,
         Artist: {
           select: {
             name: true,
+          },
+        },
+        Album: {
+          select: {
+            name: true, // Assuming you want the album's name
           },
         },
         Genre: {
@@ -30,6 +39,7 @@ export const getAllSongs = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
 
 export const getSongById = async (req: Request, res: Response) => {
   const { songId } = req.params;

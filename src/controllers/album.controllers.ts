@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import  prismaClient from "../db/client";
+import prismaClient from "../db/client";
 
 export const getAlbumById = async (req: Request, res: Response) => {
   const { albumId } = req.params;
@@ -84,7 +84,7 @@ export const getAllGenres = async (req: Request, res: Response) => {
     const genres = await prismaClient.genre.findMany({
       include: {
         Song: {
-          take: 10, 
+          take: 10,
           select: {
             id: true,
             name: true,
@@ -95,7 +95,7 @@ export const getAllGenres = async (req: Request, res: Response) => {
             artistId: true,
             albumId: true,
             genreId: true,
-        
+
           },
         },
       },
@@ -108,20 +108,29 @@ export const getAllGenres = async (req: Request, res: Response) => {
 export const getAllAlbums = async (req: Request, res: Response) => {
   try {
     const albums = await prismaClient.album.findMany({
-      take: 20,
-      include: {
+      take: 23,
+      select: {
+        id: true,
+        name: true,
+        thumbnail: true,
+        Genre: {
+          select: {
+            id: true,
+            name: true}},
+        Artist: {
+          select: {
+            id: true,
+            thumbnail: true,
+            name: true,
+          },
+        },
         Song: {
-          take: 10, 
           select: {
             id: true,
             name: true,
             url: true,
-            duration: true,
             thumbnail: true,
             isPublic: true,
-            artistId: true,
-            albumId: true,
-            genreId: true,
             Artist: {
               select: {
                 name: true,
@@ -136,6 +145,7 @@ export const getAllAlbums = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
 export const getAlbumByUserId = async (req: Request, res: Response) => {
   const { userId } = req.params;
   try {

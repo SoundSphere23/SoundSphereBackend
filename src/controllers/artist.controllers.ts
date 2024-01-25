@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import  prismaClient  from "../db/client";
+import prismaClient from "../db/client";
 
 export const getArtistById = async (req: Request, res: Response) => {
     const { artistId } = req.params
@@ -29,7 +29,7 @@ export const createArtist = async (req: Request, res: Response) => {
 
 export const updateArtist = async (req: Request, res: Response) => {
     const { artistId } = req.params
-    const { name} = req.body
+    const { name } = req.body
     try {
         const user = await prismaClient.artist.update({
             where: { id: artistId },
@@ -69,15 +69,96 @@ export const getAllArtists = async (req: Request, res: Response) => {
                 name: true,
                 thumbnail: true,
                 Song: {
-                    take: 10, 
-                    include: {
-                        Album: true, 
-                        
+                    take: 10,
+                    select: {
+                        id: true,
+                        name: true,
+                        url: true,
+                        thumbnail: true,
+                    },},
+                Album: {
+                        select: {
+                            id: true,
+                            name: true,
+                            thumbnail: true,
+                        },
+                    },
+
+                
+            },
+        });
+        res.status(200).json(artists);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+
+export const getAlbumsByArtist = async (req: Request, res: Response) => {
+    const artistId = req.params.artistId;
+
+    try {
+        const albums = await prismaClient.album.findMany({
+            where: {
+                artistId: artistId,
+                isPublic: true,
+            },
+            select: {
+                id: true,
+                name: true,
+                thumbnail: true,
+                Song: { // Include all songs within the album
+                    select: {
+                        id: true,
+                        name: true,
+                        thumbnail: true,
+                        url: true,
                     },
                 },
             },
         });
-        res.status(200).json(artists);
+        res.status(200).json(albums);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+};
+
+export const getSongsByArtist = async (req: Request, res: Response) => {
+    const artistId = req.params.artistId;
+
+    try {
+        const songs = await prismaClient.song.findMany({
+            where: {
+                artistId: artistId,
+                isPublic: true,
+            },
+            select: {
+                id: true,
+                name: true,
+                url: true,
+                thumbnail: true,
+                Album: {
+                    select: {
+                        id: true,
+                        name: true,
+                        thumbnail: true,
+                    },
+                },
+                Artist: { // Correctly accessing the Artist relation
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+                Genre: {
+                    select: {
+                        id: true,
+                        name: true,
+                    },
+                },
+            },
+        });
+        res.status(200).json(songs);
     } catch (error) {
         res.status(500).json(error);
     }
