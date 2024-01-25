@@ -58,9 +58,27 @@ export const deleteGenre = async (req: Request, res: Response) => {
 
 export const getAllGenres = async (req: Request, res: Response) => {
     try {
-        const genres = await prismaClient.genre.findMany({})
-        res.status(200).json(genres)
+        const genres = await prismaClient.genre.findMany({
+            include: {
+                Song: {
+                    take: 10, // Limit the number of songs to 10 per genre
+                    select: {
+                        id: true,
+                        name: true,
+                        url: true,
+                        duration: true,
+                        thumbnail: true,
+                        isPublic: true,
+                        artistId: true,
+                        albumId: true,
+                        genreId: true,
+                        // Include additional fields if needed
+                    },
+                },
+            },
+        });
+        res.status(200).json(genres);
     } catch (error) {
-        res.status(500).json(error)
+        res.status(500).json(error);
     }
-}
+};

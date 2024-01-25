@@ -79,15 +79,63 @@ export const deleteAlbumById = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllGenres = async (req: Request, res: Response) => {
+  try {
+    const genres = await prismaClient.genre.findMany({
+      include: {
+        Song: {
+          take: 10, 
+          select: {
+            id: true,
+            name: true,
+            url: true,
+            duration: true,
+            thumbnail: true,
+            isPublic: true,
+            artistId: true,
+            albumId: true,
+            genreId: true,
+        
+          },
+        },
+      },
+    });
+    res.status(200).json(genres);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 export const getAllAlbums = async (req: Request, res: Response) => {
   try {
-    const albums = await prismaClient.album.findMany({});
+    const albums = await prismaClient.album.findMany({
+      take: 20,
+      include: {
+        Song: {
+          take: 10, 
+          select: {
+            id: true,
+            name: true,
+            url: true,
+            duration: true,
+            thumbnail: true,
+            isPublic: true,
+            artistId: true,
+            albumId: true,
+            genreId: true,
+            Artist: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    });
     res.status(200).json(albums);
   } catch (error) {
     res.status(500).json(error);
   }
 };
-
 export const getAlbumByUserId = async (req: Request, res: Response) => {
   const { userId } = req.params;
   try {
@@ -101,4 +149,4 @@ export const getAlbumByUserId = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json(error);
   }
-};
+}
