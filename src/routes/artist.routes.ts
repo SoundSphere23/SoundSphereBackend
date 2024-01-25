@@ -5,7 +5,7 @@ import { createArtist, deleteArtist, getAllArtists, getArtistById, updateArtist 
 const artistRoutes = Router()
 
 artistRoutes.get("/", getAllArtists)
-artistRoutes.get("/:artistId", getArtistById)
+artistRoutes.get("/getArtistById", getArtistById)
 artistRoutes.post("/", createArtist)
 artistRoutes.patch("/:artistId", updateArtist)
 artistRoutes.delete("/:artistId", deleteArtist)

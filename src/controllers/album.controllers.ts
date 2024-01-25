@@ -1,5 +1,6 @@
 import { Response, Request } from "express";
 import  prismaClient from "../db/client";
+import { getArtistById } from "./artist.controllers";
 
 export const getAlbumById = async (req: Request, res: Response) => {
   const { albumId } = req.params;
@@ -150,3 +151,21 @@ export const getAlbumByUserId = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 }
+
+
+export const getAlbumByArtistId = async (req: Request, res: Response) => {
+  const { artistId } = req.params;
+  try {
+    const albums = await prismaClient.album.findMany({
+      where: {
+        artistId: artistId,
+      },
+    });
+
+    res.status(200).json(albums);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+
