@@ -6,7 +6,40 @@ export const getAlbumById = async (req: Request, res: Response) => {
   const { albumId } = req.params;
   try {
     const album = await prismaClient.album.findUnique({
-      where: { id: albumId },
+     where: { id: albumId },
+      
+      select: {
+        id: true,
+        name: true,
+        thumbnail: true,
+        Genre: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        Artist: {
+          select: {
+            id: true,
+            thumbnail: true,
+            name: true,
+          },
+        },
+        Song: {
+          select: {
+            id: true,
+            name: true,
+            url: true,
+            thumbnail: true,
+            isPublic: true,
+            Artist: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
     res.status(200).json(album);
   } catch (error) {

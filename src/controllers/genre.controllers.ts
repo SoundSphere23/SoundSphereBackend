@@ -61,7 +61,7 @@ export const getAllGenres = async (req: Request, res: Response) => {
         const genres = await prismaClient.genre.findMany({
             include: {
                 Song: {
-                    take: 10, // Limit the number of songs to 10 per genre
+                    take: 10,
                     select: {
                         id: true,
                         name: true,
@@ -72,7 +72,7 @@ export const getAllGenres = async (req: Request, res: Response) => {
                         artistId: true,
                         albumId: true,
                         genreId: true,
-                        // Include additional fields if needed
+                   
                     },
                 },
             },

@@ -107,7 +107,7 @@ export const getAlbumsByArtist = async (req: Request, res: Response) => {
                 id: true,
                 name: true,
                 thumbnail: true,
-                Song: { // Include all songs within the album
+                Song: { 
                     select: {
                         id: true,
                         name: true,
@@ -144,7 +144,7 @@ export const getSongsByArtist = async (req: Request, res: Response) => {
                         thumbnail: true,
                     },
                 },
-                Artist: { // Correctly accessing the Artist relation
+                Artist: { 
                     select: {
                         id: true,
                         name: true,
