@@ -1,6 +1,5 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import userRoutes from "./routes/user.routes";
-import { jwtCheckMiddleware } from "./middlewares/jwtCheck";
 import songRoutes from "./routes/song.routes";
 import genreRoutes from "./routes/genre.routes";
 import artistRoutes from "./routes/artist.routes";
