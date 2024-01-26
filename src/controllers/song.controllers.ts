@@ -193,3 +193,19 @@ export const getPublicSongsByGenre = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
+
+export const getSongsByAlbumId = async (req: Request, res: Response) => {
+  const { albumId } = req.params;
+  try {
+    const albumSongs = await prismaClient.song.findMany({
+      where: {
+       albumId: albumId,
+      },
+    });
+
+    res.status(200).json(albumSongs);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
