@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import  prismaClient  from "../db/client";
+import prismaClient from "../db/client";
 
 export const getPlaylistById = async (req: Request, res: Response) => {
   const { playlistId } = req.params;
@@ -132,29 +132,31 @@ export const addSongToPlayList = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "This song already exists in the selected playlist" });
     }
-
-    const updatedPlaylist = await prismaClient.playlist.update({
-      where: {
-        id: playlistId,
-      },
-      data: {
-        playlistSongs: [songId, ...existingPlaylist.playlistSongs],
-        thumbnail: thumbnail,
-      },
-    });
-    res.status(200).json(updatedPlaylist);
+    if (!existingPlaylist.playlistSongs.includes(songId)) {
+      const updatedPlaylist = await prismaClient.playlist.update({
+        where: {
+          id: playlistId,
+        },
+        data: {
+          playlistSongs: [songId, ...existingPlaylist.playlistSongs],
+          thumbnail: thumbnail,
+        },
+      });
+      res.status(200).json(updatedPlaylist);
+    }
   } catch (error) {
     console.error("Error adding song to playlist:", error);
     if (!res.headersSent) res.status(500).json(error);
   }
 };
 
-
 export const getSongsFromPlaylist = async (req: Request, res: Response) => {
   const { playlistId } = req.body;
 
   if (!playlistId) {
-    return res.status(400).json({ error: "Playlist ID is required in the request body" });
+    return res
+      .status(400)
+      .json({ error: "Playlist ID is required in the request body" });
   }
 
   try {
