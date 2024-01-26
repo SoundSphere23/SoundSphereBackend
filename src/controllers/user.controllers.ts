@@ -1,17 +1,21 @@
 import { Response, Request } from "express";
 import prismaClient from "../db/client";
 
+export const fetchAllUsersFromDB = async () => {
+  const users = await prismaClient.user.findMany({});
+  return users
+}
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await prismaClient.user.findMany({});
-    
-
+    const users = fetchAllUsersFromDB()
     res.status(201).json(users);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ error: "Can't load users" });
   }
 };
+
+
 
 
 export const createUser = async (req: Request, res: Response) => {
