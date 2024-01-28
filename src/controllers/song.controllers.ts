@@ -187,6 +187,28 @@ export const getPublicSongsByGenre = async (req: Request, res: Response) => {
         isPublic: true,
         genreId: genreId,
       },
+      take : 10,
+      select: {
+        id: true,
+        name: true,
+        url: true,
+        thumbnail: true,
+        Artist: {
+          select: {
+            name: true,
+          },
+        },
+        Album: {
+          select: {
+            name: true,
+          },
+        },
+        Genre: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
     res.status(200).json(song);
   } catch (error) {
