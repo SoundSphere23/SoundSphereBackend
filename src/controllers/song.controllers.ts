@@ -2,13 +2,44 @@ import { Response, Request } from "express";
 import prismaClient from "../db/client";
 
 export const getAllSongs = async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 0; // Default to page 0
+  const pageSize = 23;
+
   try {
-    const song = await prismaClient.song.findMany({});
-    res.status(200).json(song);
+    const songs = await prismaClient.song.findMany({
+      where: {
+        isPublic: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        url: true,
+        thumbnail: true,
+        Artist: {
+          select: {
+            name: true,
+          },
+        },
+        Album: {
+          select: {
+            name: true, // Assuming you want the album's name
+          },
+        },
+        Genre: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      take: pageSize,
+      skip: page * pageSize,
+    });
+    res.status(200).json(songs);
   } catch (error) {
     res.status(500).json(error);
   }
 };
+
 
 export const getSongById = async (req: Request, res: Response) => {
   const { songId } = req.params;
@@ -55,6 +86,7 @@ export const createSong = async (req: Request, res: Response) => {
         UserCreator: { connect: { id: userId } },
         Genre: { connect: { id: genreId } },
         Album: { connect: { id: albumId } },
+        Artist: { connect: { id: '65b238d4335a2dd9222300be' } },
       },
     });
     res.status(201).json(newSong);
@@ -118,13 +150,30 @@ export const getSongsByUserId = async (req: Request, res: Response) => {
   }
 };
 export const getPublicSongs = async (req: Request, res: Response) => {
+  const page = parseInt(req.query.page as string) || 0; // Default to page 0
+  const pageSize = 20;
+
   try {
-    const song = await prismaClient.song.findMany({
+    const songs = await prismaClient.song.findMany({
       where: {
         isPublic: true,
       },
+      include: {
+        Artist: {
+          select: {
+            name: true,
+          },
+        },
+        Genre: {
+          select: {
+            name: true, 
+          },
+        },
+      },
+      take: pageSize,
+      skip: page * pageSize,
     });
-    res.status(200).json(song);
+    res.status(200).json(songs);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -144,3 +193,19 @@ export const getPublicSongsByGenre = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+
+
+export const getSongsByAlbumId = async (req: Request, res: Response) => {
+  const { albumId } = req.params;
+  try {
+    const albumSongs = await prismaClient.song.findMany({
+      where: {
+       albumId: albumId,
+      },
+    });
+
+    res.status(200).json(albumSongs);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}

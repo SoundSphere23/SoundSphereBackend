@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import  prismaClient  from "../db/client";
+import prismaClient from "../db/client";
 
 export const getPlaylistById = async (req: Request, res: Response) => {
   const { playlistId } = req.params;
@@ -132,19 +132,65 @@ export const addSongToPlayList = async (req: Request, res: Response) => {
         .status(400)
         .json({ error: "This song already exists in the selected playlist" });
     }
-
-    const updatedPlaylist = await prismaClient.playlist.update({
-      where: {
-        id: playlistId,
-      },
-      data: {
-        playlistSongs: [songId, ...existingPlaylist.playlistSongs],
-        thumbnail: thumbnail,
-      },
-    });
-    res.status(200).json(updatedPlaylist);
+    if (!existingPlaylist.playlistSongs.includes(songId)) {
+      const updatedPlaylist = await prismaClient.playlist.update({
+        where: {
+          id: playlistId,
+        },
+        data: {
+          playlistSongs: [songId, ...existingPlaylist.playlistSongs],
+          thumbnail: thumbnail,
+        },
+      });
+      res.status(200).json(updatedPlaylist);
+    }
   } catch (error) {
     console.error("Error adding song to playlist:", error);
     if (!res.headersSent) res.status(500).json(error);
+  }
+};
+
+export const getSongsFromPlaylist = async (req: Request, res: Response) => {
+  const { playlistId } = req.body;
+
+  if (!playlistId) {
+    return res
+      .status(400)
+      .json({ error: "Playlist ID is required in the request body" });
+  }
+
+  try {
+    const existingPlaylist = await prismaClient.playlist.findUnique({
+      where: { id: playlistId },
+      select: {
+        playlistSongs: true,
+      },
+    });
+
+    if (!existingPlaylist) {
+      return res.status(404).json({ error: "Playlist not found" });
+    }
+
+    const songIds = existingPlaylist.playlistSongs;
+
+    // Fetch song details for each song ID in the playlist
+    const songs = [];
+
+    for (const songId of songIds) {
+      const song = await prismaClient.song.findUnique({
+        where: {
+          id: songId,
+        },
+      });
+
+      if (song) {
+        songs.push(song);
+      }
+    }
+
+    return res.status(200).json({ songs });
+  } catch (error) {
+    console.error("Error retrieving songs from playlist:", error);
+    if (!res.headersSent) return res.status(500).json(error);
   }
 };
