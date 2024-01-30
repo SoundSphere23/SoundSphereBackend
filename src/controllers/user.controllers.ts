@@ -9,6 +9,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = fetchAllUsersFromDB()
     res.status(201).json(users);
+    return users
+  return users
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Can't load users" });
@@ -18,24 +20,33 @@ export const getAllUsers = async (req: Request, res: Response) => {
 
 
 
+
+export const fetchFindUser = async (email: string) => {
+  const user = await prismaClient.user.findUnique({
+    where: {
+      email: email,
+    },
+  });
+  return user
+}
+export const fetchCreateUser = async (email: string, name: string) => {
+ const user = await prismaClient.user.create({
+    data: { name, email },
+  });
+  return user
+}
 export const createUser = async (req: Request, res: Response) => {
   const { name, email } = req.body;
 
   try {
-    let user = await prismaClient.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
+    let user = await fetchFindUser(email)
 
     if (user) {
       const userId = user.id;
       return res.status(200).json({ userId });
     }
     if (!user) {
-      user = await prismaClient.user.create({
-        data: { name, email },
-      });
+      user = await fetchCreateUser(email, name)
       return res.status(201).json(user);
     }
   } catch (error) {
@@ -45,6 +56,8 @@ export const createUser = async (req: Request, res: Response) => {
     await prismaClient.$disconnect();
   }
 };
+
+
 
 
 export const userUpdateDataController = async (req: Request, res: Response) => {
@@ -78,5 +91,6 @@ export const userUpdateDataController = async (req: Request, res: Response) => {
     await prismaClient.$disconnect();
   }
 };
+
 
 export default userUpdateDataController;

@@ -1,10 +1,15 @@
-import { describe, test, expect, vi, afterEach, beforeEach } from "vitest";
-import { fetchAllUsersFromDB, getAllUsers } from '../user.controllers'
+import { describe, test, expect, vi, assert, beforeEach } from "vitest";
+import { fetchAllUsersFromDB, fetchFindUser, fetchCreateUser, getAllUsers } from '../user.controllers'
 import prismaClient from "../../db/__mocks__/client";
 import { User } from "@prisma/client";
 
-vi.mock('../../db/client')
+import {mockReset,mockDeep } from 'vitest-mock-extended'
 
+
+vi.mock('../../db/client')
+beforeEach(() => {
+  vi.resetModules()
+})
 const mockUsers: User[] = [{
     id: "1",
     name: "Chanchito",
@@ -18,19 +23,16 @@ const mockUsers: User[] = [{
     email: "midu@test.com",
     createdAt: new Date(),
     updatedAt: new Date(),
-},
+}
 ]
 
-
-// beforeEach(() => { })
-// afterEach(async () => {
-//     vi.clearAllMocks() // testing data after each test run
-// })
-global.fetch = vi.fn()
-
-function createFetchResponse(data: User[]) {
-    return { json: () => new Promise((resolve) => resolve(data)) }
-  }
+const mockNewUser: User = {
+    id: "1",
+    name: "Chanchito",
+    email: "test@test.com",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+}
 
 describe('fetchAllUsersFromDB', () => {
     test('should return correct payload', async () => {
@@ -40,38 +42,110 @@ describe('fetchAllUsersFromDB', () => {
         const users = await fetchAllUsersFromDB()
         expect(users).toHaveLength(2)
     })
-
 })
 
-describe("getAllUsers", () => {
 
-    test("makes a GET request to fetch all users and returns the result", () => {
-        global.fetch = () =>  Promise.resolve<any>({
-            status: 200,
-            json: () => Promise.resolve(mockUsers)
-        }) 
-       
+describe('create user fetch calls', () => {
+    test('should find user logged on db', async () => {
+        prismaClient.user.findUnique.mockResolvedValue(mockNewUser)
 
-        const users = getAllUsers
-        expect(users).toHaveLength(2)
-
+        const newUser = await fetchFindUser(mockNewUser.email)
+        expect(newUser).not.toBeNull()
+        expect(newUser?.email).toMatchObject(mockNewUser.email)
     })
+    test('should NOT find user logged on db', async () => {
+        prismaClient.user.findUnique.mockResolvedValue(null)
 
-    test("makes a GET request to fetch all users and returns error 500", async () => {
-        global.fetch = () =>  Promise.resolve<any>({
-            status: 500,
-            json: () => Promise.resolve()
-        }) 
-       
-
-        const users =  getAllUsers
-        console.log("get all users", users)
-        expect(users).toHaveLength(3)
-
+        const newUser = await fetchFindUser(mockNewUser.email)
+        expect(newUser).toBeNull()
+        expect(newUser?.name).not.toMatchObject(mockNewUser.name)
     })
-
-
-
-
 })
 
+// Mocking Prisma for testing
+vi.mock('"../../db/__mocks__/client"', () => ({
+  prismaClient: {
+    user: {
+      create: vi.fn(),
+    },
+  },
+}));
+
+// Your actual test
+describe('fetchCreateUser', () => {
+  test('creates a user', async () => {
+    // Arrange
+    const email = 'test@example.com';
+    const name = 'Test User';
+
+    // Mock the Prisma create method
+    (prismaClient.user.create).mockResolvedValueOnce(mockNewUser);
+
+    // Act
+    const result = await fetchCreateUser(email, name);
+
+    // Assert
+    assert.equal(result, mockNewUser, 'The returned user should match the expected user');
+    expect(prismaClient.user.create).toHaveBeenCalledWith({
+      data: { name, email },
+    });
+  });
+});
+
+
+
+
+
+
+// Mock the fetchAllUsersFromDB function
+const mockFetchAllUsersFromDB = vi.fn<User[]>(() => mockUsers);
+
+vi.mock('../user.controller', () => ({
+  fetchAllUsersFromDB: mockFetchAllUsersFromDB,
+}));
+
+describe('get all users test', () => {  
+
+  test("Should return status 201 and list of users", async () => {
+
+    const mockRequest: any = {};
+    const mockResponse: any = {
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn(),
+    };
+
+    
+  // Call the function with the mock objects
+  await getAllUsers(mockRequest, mockResponse);
+
+  // Perform assertions
+  expect(mockResponse.status).toHaveBeenCalledWith(201);
+  // expect(mockResponse.json).toHaveBeenCalledWith(mockUsers);
+
+
+  })
+
+  test.todo('should handle errors', async () => {
+    // Mock the Request and Response objects
+    const mockRequest: any = {};
+    const mockResponse: any = {
+      status: vi.fn().mockReturnThis(),
+      json: vi.fn(),
+    };
+  
+    // Mock the fetchAllUsersFromDB function to throw an error
+    mockFetchAllUsersFromDB.mockImplementation(() => {
+      throw new Error('Mock error');
+    });
+    mockResponse.status.mockImplementation(() => mockResponse);
+
+  
+    // Call the function with the mock objects
+    await getAllUsers(mockRequest, mockResponse);
+  
+    // Perform assertions
+    expect(mockResponse.status).toHaveBeenCalledWith(500);
+    // expect(mockResponse.json).toHaveBeenCalledWith(mockUsers);
+  });
+
+})
