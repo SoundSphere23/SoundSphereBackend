@@ -51,3 +51,12 @@ The MovieHub Backend is hosted on [Railway](https://railway.app/), ensuring a st
 - MVC (Model-View-Controller) design pattern.
 - [Railway](https://railway.app/) for efficient backend deployment and management.
 - [Cloudinary](https://cloudinary.com/) for media storage and management.
+
+## Preview
+
+<table>
+  <tr>
+    <td><img src="./src/assets/imgs/SoundSphere.png" alt="Mobile Version Photo" width="400"/></td>
+    <td><img src="./src/assets/imgs/soundsphere.gif" alt="Mobile Version Video" width="400"/></td>
+  </tr>
+</table>
