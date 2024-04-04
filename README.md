@@ -36,7 +36,7 @@ Welcome to the [SoundSphere Backend repository](https://github.com/SoundSphere23
 
 ## Usage
 
-Access the MovieHub backend server at http://localhost:your_port.
+Access the SoundSphere backend server at http://localhost:your_port.
 
 ## Deployment
 
